@@ -1,6 +1,7 @@
-# Google Text-to-Speech Demo
+# Google Cloud Text-to-Speech API iOS Demo
 
-This demo app showcases how to use Google Cloud Text-to-Speech API on iOS. Google’s TTS API is very powerful and the available voices sound extremely fluent and natural. More  details on the API can be found here https://cloud.google.com/text-to-speech/.
+This demo app showcases how to use Google Cloud Text-to-Speech API on iOS. Google’s TTS API is very powerful and the available voices sound extremely fluent and natural. More details on the API can be found [here](https://cloud.google.com/text-to-speech/). There's also a tutorial available [here](https://medium.com/@alejandrocotilla/how-to-integrate-google-cloud-text-to-speech-api-into-your-ios-app-140ab7be42ae).
+
 
 ## How to enable the TTS API
 As with any Google Cloud API, the API has to be enabled on a project within the Google Cloud Console and all the API calls will be associated to that project.
@@ -24,5 +25,4 @@ To setup a project in the Google Cloud Console, you can follow all the steps des
 
 ### Know issues
 
- - The standard voices tend to fail. May be a temporal bug on Google's
-   side, since this is still a beta API.
+ - The WaveNet voices work perfectly, but the standard voices tend to fail. Might be a temporal bug on Google's side, since this is still a beta API.
