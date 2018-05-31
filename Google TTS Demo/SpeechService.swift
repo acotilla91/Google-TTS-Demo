@@ -41,6 +41,7 @@ class SpeechService: NSObject, AVAudioPlayerDelegate {
             let headers = ["X-Goog-Api-Key": APIKey, "Content-Type": "application/json; charset=utf-8"]
             let response = self.makePOSTRequest(url: ttsAPIUrl, postData: postData, headers: headers)
 
+            // Get the `audioContent` (as a base64 encoded string) from the response.
             guard let audioContent = response["audioContent"] as? String else {
                 print("Invalid response: \(response)")
                 self.busy = false
@@ -50,6 +51,7 @@ class SpeechService: NSObject, AVAudioPlayerDelegate {
                 return
             }
             
+            // Decode the base64 string into a Data object
             guard let audioData = Data(base64Encoded: audioContent) else {
                 self.busy = false
                 DispatchQueue.main.async {
@@ -68,34 +70,33 @@ class SpeechService: NSObject, AVAudioPlayerDelegate {
     }
     
     private func buildPostData(text: String, voiceType: VoiceType) -> Data {
-        var params: [String: Any] = [
-            "input": [
-                "text": text
-            ],
-            "voice": [
-                "languageCode": "en-US"
-            ],
-            "audioConfig": [
-                "audioEncoding": "LINEAR16"
-            ]
+        
+        var voiceParams: [String: Any] = [
+            // All available voices here: https://cloud.google.com/text-to-speech/docs/voices
+            "languageCode": "en-US"
         ]
         
         if voiceType != .undefined {
-            params["voice"] = [
-                "languageCode": "en-US",
-                "name": voiceType.rawValue
-            ]
+            voiceParams["name"] = voiceType.rawValue
         }
-        else {
-            params["voice"] = [
-                "languageCode": "en-US"
+        
+        let params: [String: Any] = [
+            "input": [
+                "text": text
+            ],
+            "voice": voiceParams,
+            "audioConfig": [
+                // All available formats here: https://cloud.google.com/text-to-speech/docs/reference/rest/v1beta1/text/synthesize#audioencoding
+                "audioEncoding": "LINEAR16"
             ]
-        }
+        ]
 
+        // Convert the Dictionary to Data
         let data = try! JSONSerialization.data(withJSONObject: params)
         return data
     }
     
+    // Just a function that makes a POST request.
     private func makePOSTRequest(url: String, postData: Data, headers: [String: String] = [:]) -> [String: AnyObject] {
         var dict: [String: AnyObject] = [:]
         
@@ -124,6 +125,7 @@ class SpeechService: NSObject, AVAudioPlayerDelegate {
         return dict
     }
     
+    // Implement AVAudioPlayerDelegate "did finish" callback to cleanup and notify listener of completion.
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         self.player?.delegate = nil
         self.player = nil
