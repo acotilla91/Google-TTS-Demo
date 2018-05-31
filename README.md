@@ -25,4 +25,4 @@ To setup a project in the Google Cloud Console, you can follow all the steps des
 
 ### Know issues
 
- - The WaveNet voices work perfectly, but the standard voices tend to fail. Might be a temporal bug on Google's side, since this is still a beta API.
+ - ~~The WaveNet voices work perfectly, but the standard voices tend to fail. Might be a temporal bug on Google's side, since this is still a beta API.~~ Issue seems resolved.
