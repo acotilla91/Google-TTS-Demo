@@ -17,7 +17,7 @@ To setup a project in the Google Cloud Console, you can follow all the steps des
 ## Running the app
 1.  Clone this repo 
 	```
-	$ git clone https://github.com/acotilla91/Google-TTS-Demo.git
+	git clone https://github.com/acotilla91/Google-TTS-Demo.git
 	```
 2.  Open project in Xcode.
 3.  Go to the `SpeechService` class and replace `<YOUR_API_KEY>` with the actual API key that was obtained from the steps above.
